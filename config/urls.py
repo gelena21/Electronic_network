@@ -14,9 +14,19 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+from electronic_network import (
+    views,
+)  # Импорт представления index из приложения electronic_network
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path(
+        "admin/", admin.site.urls, name="admin"
+    ),  # Маршруты для административной панели
+    path("", views.index, name="index"),  # Домашняя страница
+    path(
+        "api/", include("electronic_network.urls")
+    ),  # Включение маршрутов из приложения electronic_network
 ]
